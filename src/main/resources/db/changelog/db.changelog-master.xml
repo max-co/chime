@@ -31,4 +31,16 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet id="insert_artists_1" author="max_co">
+    <sqlFile path="db/changelog/v1/sql/artists.sql"/>
+    <rollback>
+      DELETE FROM artist WHERE id IN (1, 2)
+    </rollback>
+  </changeSet>
+  <changeSet id="insert_songs_1" author="max_co">
+    <sqlFile path="db/changelog/v1/sql/songs.sql"/>
+    <rollback>
+      DELETE FROM song WHERE title IN ('short lorem ipsum', 'lorem ipsum')
+    </rollback>
+  </changeSet>
 </databaseChangeLog>
