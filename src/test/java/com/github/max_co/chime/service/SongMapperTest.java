@@ -8,23 +8,27 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.github.max_co.chime.dto.ArtistDto;
 import com.github.max_co.chime.dto.SongDto;
 import com.github.max_co.chime.entity.Artist;
 import com.github.max_co.chime.entity.Song;
 
+@SpringBootTest
+@TestMethodOrder(MethodOrderer.Random.class)
 class SongMapperTest {
 
   private SongMapper mapper;
 
-  @BeforeEach
-  void setup() {
-    ArtistMapper artistMapper = new ArtistMapper();
-    mapper = new SongMapper(artistMapper);
+  @Autowired
+  public SongMapperTest(SongMapper songMapper) {
+    this.mapper = songMapper;
   }
 
   @ParameterizedTest

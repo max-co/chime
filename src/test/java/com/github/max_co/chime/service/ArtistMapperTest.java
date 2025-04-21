@@ -12,21 +12,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.github.max_co.chime.dto.ArtistDto;
 import com.github.max_co.chime.entity.Artist;
 import com.github.max_co.chime.entity.Song;
 
+@SpringBootTest
+@TestMethodOrder(MethodOrderer.Random.class)
 class ArtistMapperTest {
 
   private ArtistMapper mapper;
 
-  @BeforeEach
-  void setup() {
-    mapper = new ArtistMapper();
+  @Autowired
+  public ArtistMapperTest(ArtistMapper artistMapper) {
+    this.mapper = artistMapper;
   }
 
   @ParameterizedTest
