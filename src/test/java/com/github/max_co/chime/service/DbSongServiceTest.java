@@ -28,7 +28,7 @@ class DbSongServiceTest {
 
   @BeforeEach
   void setupDb() {
-    jdbc.execute("INSERT INTO artist (id, name) VALUES (1, 'Marcus Tullius Cicero'), (2, 'Tully');");
+    jdbc.execute("INSERT INTO artist (name) VALUES ('Marcus Tullius Cicero'), ('Tully');");
     jdbc.execute("INSERT INTO song (title, language, text, translation, artist_id) VALUES " +
         "('TITLE', 'LA', 'TEXT', 'TRANSLATION', 1), " +
         "('Song', 'EN', 'La la la', NULL, NULL);");
