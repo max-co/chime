@@ -72,4 +72,29 @@ class DbSongServiceTest {
     dbSongService.deleteById(dto.getId());
     assertThrows(Exception.class, () -> dbSongService.findById(id));
   }
+
+  @Test
+  void testCreate() {
+    ArtistDto artist = new ArtistDto();
+    artist.setName("Foo Bar");
+    SongDto song = new SongDto();
+    song.setArtist(artist);
+    song.setTitle("t1tl3");
+    song.setLanguage("ES");
+    song.setText("ta ta ta");
+    song.setTranslation("nice sounds");
+    song = dbSongService.save(song);
+    int id = song.getId();
+    assertNotNull(id);
+    assertDoesNotThrow(() -> dbSongService.findById(id));
+    SongDto saved = dbSongService.findById(id);
+    assertEquals("t1tl3", saved.getTitle());
+    assertEquals("ES", saved.getLanguage());
+    assertEquals("ta ta ta", saved.getText());
+    assertEquals("nice sounds", saved.getTranslation());
+    ArtistDto savedArtist = saved.getArtist();
+    assertNotNull(savedArtist);
+    assertNotNull(savedArtist.getId());
+    assertEquals("Foo Bar", savedArtist.getName());
+  }
 }
