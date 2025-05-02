@@ -3,6 +3,7 @@
 
 package com.github.max_co.chime.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +32,7 @@ public class Song {
   @Column(name = "translation", columnDefinition = "TEXT")
   private String translation;
 
-  @ManyToOne
+  @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE })
   @JoinColumn(name = "artist_id")
   private Artist artist;
 
