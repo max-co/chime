@@ -5,6 +5,8 @@ package com.github.max_co.chime.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -96,5 +98,30 @@ class DbSongServiceTest {
     assertNotNull(savedArtist);
     assertNotNull(savedArtist.getId());
     assertEquals("Foo Bar", savedArtist.getName());
+  }
+
+  @Test
+  void testFindAll() {
+    List<SongDto> songs = dbSongService.findAll();
+    assertEquals(2, songs.size());
+    SongDto first = songs.stream().filter(s -> "TITLE".equals(s.getTitle())).findAny().orElse(null);
+    SongDto second = songs.stream().filter(s -> "Song".equals(s.getTitle())).findAny().orElse(null);
+    assertNotNull(first);
+    assertNotNull(second);
+    assertEquals(1, first.getId());
+    assertEquals("TITLE", first.getTitle());
+    assertEquals("LA", first.getLanguage());
+    assertEquals("TEXT", first.getText());
+    assertEquals("TRANSLATION", first.getTranslation());
+    ArtistDto artist = first.getArtist();
+    assertNotNull(artist);
+    assertEquals(1, artist.getId());
+    assertEquals("Marcus Tullius Cicero", artist.getName());
+    assertEquals(2, second.getId());
+    assertEquals("Song", second.getTitle());
+    assertEquals("EN", second.getLanguage());
+    assertEquals("La la la", second.getText());
+    assertNull(second.getTranslation());
+    assertNull(second.getArtist());
   }
 }
