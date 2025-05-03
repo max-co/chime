@@ -20,7 +20,7 @@
         <tbody>
           <tr th:each="song : ${songs}">
             <td th:text="${song.title}">Song Title</td>
-            <td th:text="${song.artist.name}">Artist</td>
+            <td th:text="${song.artist?.name}">Artist</td>
             <td>
               <a th:href="@{'/song/' + ${song.id}}" class="btn view-btn"
                 >View</a
