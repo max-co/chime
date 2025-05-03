@@ -1,36 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Chime</title>
     <link rel="stylesheet" th:href="@{/css/dark.css}" />
-</head>
-<body class="piano-theme">
+  </head>
+  <body class="piano-theme">
     <div class="container">
-        <h1 class="title">🎶 Song List</h1>
-        <table class="entity-table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Artist</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="song : ${songs}">
-                    <td th:text="${song.title}">Song Title</td>
-                    <td th:text="${song.artist.name}">Artist</td>
-                    <td>
-                        <a th:href="@{'/song/' + ${song.id}}" class="btn view-btn">View</a>
-                        <a th:href="@{'/song/edit/' + ${song.id}}" class="btn edit-btn">Edit</a>
-                        <form th:action="@{'/song/delete/' + ${song.id}}" method="post" style="display:inline;">
-                            <button type="submit" class="btn delete-btn">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <h1 class="title">🎶 Song List</h1>
+      <table class="entity-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="song : ${songs}">
+            <td th:text="${song.title}">Song Title</td>
+            <td th:text="${song.artist.name}">Artist</td>
+            <td>
+              <a th:href="@{'/song/' + ${song.id}}" class="btn view-btn"
+                >View</a
+              >
+              <a th:href="@{'/song/edit/' + ${song.id}}" class="btn edit-btn"
+                >Edit</a
+              >
+              <form
+                th:action="@{'/song/delete/' + ${song.id}}"
+                method="post"
+                style="display: inline"
+              >
+                <button type="submit" class="btn delete-btn">Delete</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-</body>
+  </body>
 </html>
