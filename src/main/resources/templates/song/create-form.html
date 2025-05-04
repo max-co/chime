@@ -1,0 +1,71 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chime</title>
+    <link rel="stylesheet" th:href="@{/css/dark.css}" />
+  </head>
+  <body class="piano-theme">
+    <div class="container">
+      <h1 class="title">🎶 Add New Song</h1>
+      <form
+        th:action="@{/song/save}"
+        th:object="${song}"
+        method="POST"
+        class="entity-form"
+      >
+        <div class="form-row">
+          <label for="title">Title</label>
+          <input
+            type="text"
+            th:field="*{title}"
+            id="title"
+            placeholder="Song title"
+          />
+        </div>
+
+        <div class="form-row">
+          <label for="language">Language</label>
+          <input
+            type="text"
+            th:field="*{language}"
+            id="language"
+            placeholder="Language"
+          />
+        </div>
+
+        <div class="form-row-horizontal">
+          <div class="form-group">
+            <label for="text">Text</label>
+            <textarea
+              th:field="*{text}"
+              id="text"
+              rows="16"
+              placeholder="Lyrics in original language"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="translation">Translation</label>
+            <textarea
+              th:field="*{translation}"
+              id="translation"
+              rows="16"
+              placeholder="Translated lyrics"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <!-- TODO <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"
+          /> -->
+          <button type="submit" class="btn view-btn">💾 Save</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

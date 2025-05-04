@@ -38,4 +38,11 @@ public class SongController {
 
     return "song/list";
   }
+
+  @GetMapping("/create-form")
+  public String showCreateForm(Model model) {
+    SongDto song = new SongDto();
+    model.addAttribute("song", song);
+    return "song/create-form";
+  }
 }
