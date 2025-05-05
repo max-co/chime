@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.github.max_co.chime.dto.SongDto;
@@ -44,5 +46,11 @@ public class SongController {
     SongDto song = new SongDto();
     model.addAttribute("song", song);
     return "song/create-form";
+  }
+
+  @PostMapping("/save")
+  public String save(@ModelAttribute("song") SongDto song, Model model) {
+    songService.save(song);
+    return "redirect:/song";
   }
 }

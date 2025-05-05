@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,7 +17,13 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.max_co.chime.dto.SongDto;
+import com.github.max_co.chime.service.SongService;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -24,6 +31,9 @@ public class SongControllerTest {
 
   @Autowired
   private JdbcTemplate jdbc;
+
+  @Autowired
+  private SongService songService;
 
   @Autowired
   private MockMvc mockMvc;
@@ -58,5 +68,21 @@ public class SongControllerTest {
         .andExpect(status().isOk()).andReturn();
     ModelAndView mav = mvcResult.getModelAndView();
     ModelAndViewAssert.assertViewName(mav, "song/create-form");
+  }
+
+  @Test
+  void testSave() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/song/save")
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("title", "T1TL3")
+        .param("language", "EN")
+        .param("text", "T3XT")
+        .param("translation", "TR4NSL4T10N")).andExpect(status().isFound()).andReturn();
+    ModelAndView mav = mvcResult.getModelAndView();
+    ModelAndViewAssert.assertViewName(mav, "redirect:/song");
+
+    List<SongDto> songs = songService.findAll();
+    SongDto song = songs.stream().filter((s) -> "T1TL3".equals(s.getTitle())).findAny().orElse(null);
+    assertNotNull(song);
   }
 }
