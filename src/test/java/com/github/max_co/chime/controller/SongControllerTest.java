@@ -20,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.max_co.chime.dto.SongDto;
 import com.github.max_co.chime.service.SongService;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -84,5 +86,16 @@ public class SongControllerTest {
     List<SongDto> songs = songService.findAll();
     SongDto song = songs.stream().filter((s) -> "T1TL3".equals(s.getTitle())).findAny().orElse(null);
     assertNotNull(song);
+  }
+
+  @Test
+  void testDelete() throws Exception {
+    assertDoesNotThrow(() -> songService.findById(1));
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/song/delete/{id}", 1))
+        .andExpect(status().isFound())
+        .andReturn();
+    ModelAndView mav = mvcResult.getModelAndView();
+    ModelAndViewAssert.assertViewName(mav, "redirect:/song");
+    assertThrows(Exception.class, () -> songService.findById(1));
   }
 }

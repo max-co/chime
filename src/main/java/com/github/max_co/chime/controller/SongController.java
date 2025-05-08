@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -51,6 +52,12 @@ public class SongController {
   @PostMapping("/save")
   public String save(@ModelAttribute("song") SongDto song, Model model) {
     songService.save(song);
+    return "redirect:/song";
+  }
+
+  @PostMapping("/delete/{id}")
+  public String delete(@PathVariable int id, Model model) {
+    songService.deleteById(id);
     return "redirect:/song";
   }
 }
