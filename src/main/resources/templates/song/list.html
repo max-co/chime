@@ -28,7 +28,9 @@
               <a th:href="@{'/song/' + ${song.id}}" class="btn view-btn"
                 >View</a
               >
-              <a th:href="@{'/song/edit/' + ${song.id}}" class="btn edit-btn"
+              <a
+                th:href="@{'/song/update-form/' + ${song.id}}"
+                class="btn edit-btn"
                 >Edit</a
               >
               <form

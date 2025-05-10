@@ -46,7 +46,7 @@ public class SongController {
   public String showCreateForm(Model model) {
     SongDto song = new SongDto();
     model.addAttribute("song", song);
-    return "song/create-form";
+    return "song/save-form";
   }
 
   @PostMapping("/save")
@@ -59,5 +59,12 @@ public class SongController {
   public String delete(@PathVariable int id, Model model) {
     songService.deleteById(id);
     return "redirect:/song";
+  }
+
+  @GetMapping("/update-form/{id}")
+  public String showCreateForm(@PathVariable int id, Model model) {
+    SongDto song = songService.findById(id);
+    model.addAttribute("song", song);
+    return "song/save-form";
   }
 }

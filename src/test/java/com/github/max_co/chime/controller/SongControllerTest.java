@@ -21,6 +21,7 @@ import com.github.max_co.chime.dto.SongDto;
 import com.github.max_co.chime.service.SongService;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -69,7 +70,7 @@ public class SongControllerTest {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/song/create-form"))
         .andExpect(status().isOk()).andReturn();
     ModelAndView mav = mvcResult.getModelAndView();
-    ModelAndViewAssert.assertViewName(mav, "song/create-form");
+    ModelAndViewAssert.assertViewName(mav, "song/save-form");
   }
 
   @Test
@@ -84,6 +85,7 @@ public class SongControllerTest {
     ModelAndViewAssert.assertViewName(mav, "redirect:/song");
 
     List<SongDto> songs = songService.findAll();
+    assertEquals(3, songs.size());
     SongDto song = songs.stream().filter((s) -> "T1TL3".equals(s.getTitle())).findAny().orElse(null);
     assertNotNull(song);
   }
@@ -97,5 +99,39 @@ public class SongControllerTest {
     ModelAndView mav = mvcResult.getModelAndView();
     ModelAndViewAssert.assertViewName(mav, "redirect:/song");
     assertThrows(Exception.class, () -> songService.findById(1));
+  }
+
+  @Test
+  void testShowUpdateForm() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/song/update-form/{id}", 1))
+        .andExpect(status().isOk()).andReturn();
+    ModelAndView mav = mvcResult.getModelAndView();
+    ModelAndViewAssert.assertViewName(mav, "song/save-form");
+    SongDto song = (SongDto) mav.getModel().get("song");
+    assertEquals(1, song.getId());
+  }
+
+  @Test
+  void testUpdate() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/song/save")
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("artist.id", "1")
+        .param("artist.name", "Marcus+Tullius+Cicero")
+        .param("id", "1")
+        .param("title", "T1TL3")
+        .param("language", "EN")
+        .param("text", "T3XT")
+        .param("translation", "TR4NSL4T10N")).andExpect(status().isFound()).andReturn();
+    ModelAndView mav = mvcResult.getModelAndView();
+    ModelAndViewAssert.assertViewName(mav, "redirect:/song");
+
+    List<SongDto> songs = songService.findAll();
+    assertEquals(2, songs.size());
+    SongDto song = songs.stream().filter((s) -> "T1TL3".equals(s.getTitle())).findAny().orElse(null);
+    assertNotNull(song);
+    assertEquals(1, song.getId());
+    assertNotNull(song.getArtist());
+    assertEquals("Marcus+Tullius+Cicero", song.getArtist().getName());
+    assertEquals(1, song.getArtist().getId());
   }
 }

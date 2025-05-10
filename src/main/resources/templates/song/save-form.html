@@ -8,13 +8,21 @@
   </head>
   <body class="piano-theme">
     <div class="container">
-      <h1 class="title">🎶 Add New Song</h1>
+      <h1
+        class="title"
+        th:text="${song.id} == 0 ? '🎶 Add New Song' : '🎶 Update Song'"
+      >
+        🎶 Save Song
+      </h1>
       <form
         th:action="@{/song/save}"
         th:object="${song}"
         method="POST"
         class="entity-form"
       >
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{artist.id}" />
+        <input type="hidden" th:field="*{artist.name}" />
         <div class="form-row">
           <label for="title">Title</label>
           <input
