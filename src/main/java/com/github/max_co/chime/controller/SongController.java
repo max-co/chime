@@ -52,8 +52,8 @@ public class SongController {
 
   @PostMapping("/save")
   public String save(@ModelAttribute("song") SongDto song, Model model) {
-    songService.save(song);
-    return "redirect:/song";
+    SongDto saved = songService.save(song);
+    return "redirect:/song/update-form/" + saved.getId();
   }
 
   @PostMapping("/delete/{id}")

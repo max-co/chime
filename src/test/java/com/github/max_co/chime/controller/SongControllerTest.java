@@ -82,7 +82,7 @@ public class SongControllerTest {
         .param("text", "T3XT")
         .param("translation", "TR4NSL4T10N")).andExpect(status().isFound()).andReturn();
     ModelAndView mav = mvcResult.getModelAndView();
-    ModelAndViewAssert.assertViewName(mav, "redirect:/song");
+    ModelAndViewAssert.assertViewName(mav, "redirect:/song/update-form/3");
 
     List<SongDto> songs = songService.findAll();
     assertEquals(3, songs.size());
@@ -123,7 +123,7 @@ public class SongControllerTest {
         .param("text", "T3XT")
         .param("translation", "TR4NSL4T10N")).andExpect(status().isFound()).andReturn();
     ModelAndView mav = mvcResult.getModelAndView();
-    ModelAndViewAssert.assertViewName(mav, "redirect:/song");
+    ModelAndViewAssert.assertViewName(mav, "redirect:/song/update-form/1");
 
     List<SongDto> songs = songService.findAll();
     assertEquals(2, songs.size());
