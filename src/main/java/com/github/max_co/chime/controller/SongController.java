@@ -3,6 +3,7 @@
 
 package com.github.max_co.chime.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +67,27 @@ public class SongController {
     SongDto song = songService.findById(id);
     model.addAttribute("song", song);
     return "song/save-form";
+  }
+
+  @GetMapping("/{id}")
+  public String showSong(@PathVariable int id, Model model) {
+    SongDto song = songService.findById(id);
+    model.addAttribute("song", song);
+    model.addAttribute("textLines", splitLines(song.getText()));
+    model.addAttribute("translationLines", splitLines(song.getTranslation()));
+    return "song/view";
+  }
+
+  /**
+   * Splits text in list of lines.
+   *
+   * @param text can be null
+   * @return
+   */
+  private List<String> splitLines(String text) {
+    if (text == null) {
+      return Collections.emptyList();
+    }
+    return text.lines().toList();
   }
 }

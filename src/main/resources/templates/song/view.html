@@ -1,0 +1,47 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chime</title>
+    <link rel="stylesheet" th:href="@{/css/dark.css}" />
+  </head>
+  <body class="piano-theme">
+    <div class="container">
+      <h1 class="title" th:text="${song.title}">Song Title</h1>
+      <div class="swap-button-wrapper" th:if="${!translationLines.isEmpty()}">
+        <button type="button" class="btn view-btn" onclick="swapColumns()">
+          Swap
+        </button>
+      </div>
+      <div id="lyrics-wrapper" class="lyrics-wrapper">
+        <div class="lyrics-container">
+          <div class="lyrics-column">
+            <h2>Lyrics</h2>
+            <div class="lyrics">
+              <div th:each="line : ${textLines}">
+                <span th:text="${line}">Original line</span>
+                <br />
+              </div>
+            </div>
+          </div>
+          <div class="lyrics-column" th:if="${!translationLines.isEmpty()}">
+            <h2>Translation</h2>
+            <div class="lyrics" th:if="${!translationLines.isEmpty()}">
+              <div th:each="line : ${translationLines}">
+                <span th:text="${line}">Translation line</span>
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function swapColumns() {
+        const wrapper = document.getElementById("lyrics-wrapper");
+        wrapper.classList.toggle("swapped");
+      }
+    </script>
+  </body>
+</html>

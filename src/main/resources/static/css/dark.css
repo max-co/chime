@@ -8,7 +8,7 @@ body.piano-theme {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 75%;
   margin: auto;
   background-color: #1e1e1e;
   padding: 20px;
@@ -65,7 +65,14 @@ body.piano-theme {
   color: white;
   margin-right: 5px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  font-size: 1em;
+  transition:
+    background-color 0.2s,
+    transform 0.15s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
 }
 
 .view-btn {
@@ -180,4 +187,52 @@ textarea:focus {
   justify-content: flex-end;
   gap: 10px;
   margin-top: 10px;
+}
+
+.lyrics-container {
+  display: flex;
+  gap: 40px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.lyrics-column {
+  flex: 1;
+  min-width: 300px;
+  background-color: #1e1e1e;
+  border-left: 4px solid #ffffff22;
+  padding: 15px 20px;
+  border-radius: 6px;
+  box-shadow: 0 0 8px #00000055;
+}
+
+.lyrics-column h2 {
+  color: #ffffffaa;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ffffff22;
+  padding-bottom: 5px;
+}
+
+.lyrics span {
+  margin: 0 0 0 0;
+  white-space: pre-wrap;
+  color: #f0f0f0;
+  font-size: 1em;
+}
+
+.swap-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.lyrics-wrapper {
+  transition: all 0.4s ease-in-out;
+}
+
+.lyrics-wrapper.swapped .lyrics-container {
+  flex-direction: row-reverse;
+  transition: flex-direction 0.4s ease;
 }

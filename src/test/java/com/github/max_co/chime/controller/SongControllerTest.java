@@ -134,4 +134,14 @@ public class SongControllerTest {
     assertEquals("Marcus+Tullius+Cicero", song.getArtist().getName());
     assertEquals(1, song.getArtist().getId());
   }
+
+  @Test
+  void testShowSongView() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/song/{id}", 2))
+        .andExpect(status().isOk()).andReturn();
+    ModelAndView mav = mvcResult.getModelAndView();
+    ModelAndViewAssert.assertViewName(mav, "song/view");
+    SongDto song = (SongDto) mav.getModel().get("song");
+    assertEquals(2, song.getId());
+  }
 }
