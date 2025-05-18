@@ -8,7 +8,10 @@
   </head>
   <body class="piano-theme">
     <div class="container">
-      <h1 class="title" th:text="${song.title}">Song Title</h1>
+      <div class="title-wrapper">
+        <a th:href="@{/song}" class="title-anchor">🎐 Chime</a>
+        <h1 class="title" th:text="${song.title}">Song Title</h1>
+      </div>
       <div class="swap-button-wrapper" th:if="${!translationLines.isEmpty()}">
         <button type="button" class="btn view-btn" onclick="swapColumns()">
           Swap

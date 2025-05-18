@@ -8,12 +8,15 @@
   </head>
   <body class="piano-theme">
     <div class="container">
-      <h1
-        class="title"
-        th:text="${song.id} == 0 ? '🎶 Add New Song' : '🎶 Update Song'"
-      >
-        🎶 Save Song
-      </h1>
+      <div class="title-wrapper">
+        <a th:href="@{/song}" class="title-anchor">🎐 Chime</a>
+        <h1
+          class="title"
+          th:text="${song.id} == 0 ? '🎶 Add New Song' : '🎶 Update Song'"
+        >
+          🎶 Save Song
+        </h1>
+      </div>
       <form
         th:action="@{/song/save}"
         th:object="${song}"

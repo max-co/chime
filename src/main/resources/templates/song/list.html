@@ -8,7 +8,10 @@
   </head>
   <body class="piano-theme">
     <div class="container">
-      <h1 class="title">🎶 Song List</h1>
+      <div class="title-wrapper">
+        <a th:href="@{/song}" class="title-anchor">🎐 Chime</a>
+        <h1 class="title">🎶 Song List</h1>
+      </div>
       <div class="top-button">
         <a th:href="@{/song/create-form}" class="btn view-btn">Add New Song</a>
       </div>
