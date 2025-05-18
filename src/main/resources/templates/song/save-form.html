@@ -21,8 +21,16 @@
         class="entity-form"
       >
         <input type="hidden" th:field="*{id}" />
-        <input type="hidden" th:field="*{artist.id}" />
-        <input type="hidden" th:field="*{artist.name}" />
+        <input
+          type="hidden"
+          th:field="*{artist.id}"
+          th:if="${artist} != null"
+        />
+        <input
+          type="hidden"
+          th:field="*{artist.name}"
+          th:if="${artist} != null"
+        />
         <div class="form-row">
           <label for="title">Title</label>
           <input
